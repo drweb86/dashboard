@@ -1,1 +1,6 @@
 src/back-end/Dashboard/.vs/
+src/back-end/Dashboard/Dashboard.Repositories/obj/
+src/back-end/Dashboard/Dashboard.Repositories/bin/Debug/netcoreapp3.0/Dashboard.Repositories.pdb
+src/back-end/Dashboard/Dashboard.Repositories/bin/
+src/back-end/Dashboard/Dashboard.Entitites/obj/
+src/back-end/Dashboard/Dashboard.Entitites/bin/
