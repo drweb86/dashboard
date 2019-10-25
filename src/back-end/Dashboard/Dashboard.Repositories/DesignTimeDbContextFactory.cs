@@ -10,7 +10,6 @@ namespace Dashboard.Repositories
     {
         public DashboardDbContext CreateDbContext(string[] args)
         {
-            Trace.WriteLine(Directory.GetCurrentDirectory());
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(),"..", "Dashboard.Api"))
                 .AddJsonFile("appsettings.json")
