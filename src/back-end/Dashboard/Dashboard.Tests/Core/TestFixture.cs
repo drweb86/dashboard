@@ -11,11 +11,47 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dashboard.Tests
+namespace Dashboard.Tests.Core
 {
     public class TestFixture<TStartup> : IDisposable
     {
-        public static string GetProjectPath(string projectRelativePath, Assembly startupAssembly)
+        private readonly TestServer _server;
+        private bool _isDisposed;
+
+        public HttpClient Client { get; }
+
+        public TestFixture()
+            : this(Path.Combine(string.Empty))
+        {
+        }
+
+        protected TestFixture(string relativeTargetProjectParentDir)
+        {
+            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
+            var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
+
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(contentRoot)
+                .AddJsonFile("appsettings.json");
+
+            var webHostBuilder = new WebHostBuilder()
+                .UseContentRoot(contentRoot)
+                .ConfigureServices(InitializeServices)
+                .UseConfiguration(configurationBuilder.Build())
+                .UseEnvironment("Development")
+                .UseStartup(typeof(TStartup));
+
+            // Create instance of test server
+            _server = new TestServer(webHostBuilder);
+
+            // Add configuration for client
+            Client = _server.CreateClient();
+            Client.BaseAddress = new Uri("http://localhost:5001");
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        private static string GetProjectPath(string projectRelativePath, Assembly startupAssembly)
         {
             var projectName = startupAssembly.GetName().Name;
 
@@ -38,19 +74,27 @@ namespace Dashboard.Tests
             throw new Exception($"Project root could not be located using the application root {applicationBasePath}.");
         }
 
-        private TestServer Server;
-
-        public TestFixture()
-            : this(Path.Combine(""))
-        {
-        }
-
-        public HttpClient Client { get; }
-
         public void Dispose()
         {
+            Dispose(false);
+        }
+
+        ~TestFixture()
+        {
+            Dispose(true);
+        }
+
+        private void Dispose(bool finalise)
+        {
+            if (_isDisposed)
+                return;
+
             Client.Dispose();
-            Server.Dispose();
+            _server.Dispose();
+            _isDisposed = true;
+
+            if (!finalise)
+                GC.SuppressFinalize(this);
         }
 
         protected virtual void InitializeServices(IServiceCollection services)
@@ -73,30 +117,5 @@ namespace Dashboard.Tests
             services.AddSingleton(manager);
         }
 
-        protected TestFixture(string relativeTargetProjectParentDir)
-        {
-            var startupAssembly = typeof(TStartup).GetTypeInfo().Assembly;
-            var contentRoot = GetProjectPath(relativeTargetProjectParentDir, startupAssembly);
-
-            var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(contentRoot)
-                .AddJsonFile("appsettings.json");
-
-            var webHostBuilder = new WebHostBuilder()
-                .UseContentRoot(contentRoot)
-                .ConfigureServices(InitializeServices)
-                .UseConfiguration(configurationBuilder.Build())
-                .UseEnvironment("Development")
-                .UseStartup(typeof(TStartup));
-
-            // Create instance of test server
-            Server = new TestServer(webHostBuilder);
-
-            // Add configuration for client
-            Client = Server.CreateClient();
-            Client.BaseAddress = new Uri("http://localhost:5001");
-            Client.DefaultRequestHeaders.Accept.Clear();
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
     }
 }
