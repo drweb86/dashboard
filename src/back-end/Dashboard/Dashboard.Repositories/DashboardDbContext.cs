@@ -7,6 +7,5 @@ namespace Dashboard.Repositories
     {
         public DashboardDbContext(DbContextOptions<DashboardDbContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
-        public DbSet<Group> Groups { get; set; }
     }
 }

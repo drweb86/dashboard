@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Dashboard.Entitites
+﻿namespace Dashboard.Entitites
 {
     public class User
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
         // from the group model (Entity framework will connect the Primarykey and forign key)
-        public Group Group { get; set; }
-        public int GroupId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

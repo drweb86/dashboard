@@ -12,7 +12,7 @@ namespace Dashboard.Tests
 {
     // In memory db ?
 
-    public static class HttpClientExtensions
+    static class HttpClientExtensions
     {
         public static async Task<TResponse> PostAsync<TRequest, TResponse>(this HttpClient client, string url, TRequest data)
         {
@@ -41,10 +41,57 @@ namespace Dashboard.Tests
         }
 
         [Fact]
-        public async Task CanRegister()
+        public async Task CanRegisterAndLogin()
         {
-            var result = await Client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth", new AuthRegisterInputModel() { Login="vasya", Password="jora" });
-            Assert.Equal("Auth OK", result.Message);
+            var registerResult = await Client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth/Register", new AuthRegisterInputModel() {
+                FirstName = "Vasya",
+                LastName = "Kurochkin",
+                Username = "Vasilina",
+                Password = "The Top Secret"
+            });
+
+            Assert.Equal("Registered", registerResult.Message);
+
+            var loginResult = await Client.PostAsync<AuthLoginInputModel, AuthResultModel>("/Auth/Login", new AuthLoginInputModel()
+            {
+                Username = "Vasilina",
+                Password = "The Top Secret"
+            });
+            Assert.NotEqual("", loginResult.Token);
+            Assert.NotNull(loginResult.Token);
+
+            try
+            {
+                var badloginResult = await Client.PostAsync<AuthLoginInputModel, AuthResultModel>("/Auth/Login", new AuthLoginInputModel()
+                {
+                    Username = "Vasilina",
+                    Password = "1111111The Top Secret"
+                });
+                throw new Exception("Can login with invalid password!");
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        [Fact]
+        public async Task UnauthorisedCallWillFail()
+        {
+            try
+            {
+                var testResult = await Client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth/Test", new AuthRegisterInputModel()
+                {
+                    FirstName = "Vasya",
+                    LastName = "Kurochkin",
+                    Username = "Vasilina",
+                    Password = "The Top Secret"
+                });
+                throw new Exception("Can do unauthorized staff!");
+            }
+            catch { }
+
         }
 
         //[Fact]

@@ -8,3 +8,7 @@ src/back-end/Dashboard/Dashboard.Tests/bin/
 src/back-end/Dashboard/Dashboard.Tests/obj/
 src/back-end/Dashboard/Dashboard.ViewModels/bin/
 src/back-end/Dashboard/Dashboard.ViewModels/obj/
+src/back-end/Dashboard/Dashboard.Services/obj/
+src/back-end/Dashboard/Dashboard.Services/bin/
+src/back-end/Dashboard/Dashboard.Core/obj/
+src/back-end/Dashboard/Dashboard.Core/bin/
