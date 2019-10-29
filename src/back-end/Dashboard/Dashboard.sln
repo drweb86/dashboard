@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Api", "Dashboard.Api\Dashboard.Api.csproj", "{9AAF6FA9-8BFD-4670-BBA3-9872E81DE672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.Entitites", "Dashboard.Entitites\Dashboard.Entitites.csproj", "{072C4DBA-A92B-4FC7-BDB6-A4BD91D40CB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Entitites", "Dashboard.Entitites\Dashboard.Entitites.csproj", "{072C4DBA-A92B-4FC7-BDB6-A4BD91D40CB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.Repositories", "Dashboard.Repositories\Dashboard.Repositories.csproj", "{749C4D09-EE4D-4E5B-B5F3-2144B6C7751D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Repositories", "Dashboard.Repositories\Dashboard.Repositories.csproj", "{749C4D09-EE4D-4E5B-B5F3-2144B6C7751D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.Tests", "Dashboard.Tests\Dashboard.Tests.csproj", "{6A0D2276-5E80-4228-8C9D-4ADE722AA1A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Tests", "Dashboard.Tests\Dashboard.Tests.csproj", "{6A0D2276-5E80-4228-8C9D-4ADE722AA1A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.ViewModels", "Dashboard.ViewModels\Dashboard.ViewModels.csproj", "{095F160B-7760-42F2-9228-14419D1E9CCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6A0D2276-5E80-4228-8C9D-4ADE722AA1A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A0D2276-5E80-4228-8C9D-4ADE722AA1A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A0D2276-5E80-4228-8C9D-4ADE722AA1A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{095F160B-7760-42F2-9228-14419D1E9CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{095F160B-7760-42F2-9228-14419D1E9CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{095F160B-7760-42F2-9228-14419D1E9CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{095F160B-7760-42F2-9228-14419D1E9CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

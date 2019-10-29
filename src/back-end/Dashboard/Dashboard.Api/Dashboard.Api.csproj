@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dashboard.Repositories\Dashboard.Repositories.csproj" />
+    <ProjectReference Include="..\Dashboard.ViewModels\Dashboard.ViewModels.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
