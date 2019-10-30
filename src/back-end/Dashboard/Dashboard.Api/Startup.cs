@@ -13,6 +13,8 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Dashboard.Services;
 using Dashboard.Repositories.Services;
+using AutoMapper;
+using Dashboard.Api.Mappings;
 
 namespace Dashboard.Api
 {
@@ -66,6 +68,15 @@ namespace Dashboard.Api
                     ValidateAudience = false
                 };
             });
+
+            // configure automapper
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutomapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             // configure DI for application services
             services.AddScoped<DashboardDbContext, DashboardDbContext>();

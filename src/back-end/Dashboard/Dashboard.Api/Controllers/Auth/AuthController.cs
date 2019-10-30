@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AutoMapper;
+using Dashboard.Dtos.Auth;
 using Dashboard.Services;
 using Dashboard.ViewModels.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Dashboard.Api.Controllers.Auth
 {
@@ -16,12 +14,13 @@ namespace Dashboard.Api.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ILogger<AuthController> _logger;
+        private readonly IMapper _mapper;
+        // private readonly ILogger<AuthController> _logger;
 
-        public AuthController(ILogger<AuthController> logger,
+        public AuthController(IMapper mapper,
             IUserService userService)
         {
-            _logger = logger;
+            _mapper = mapper;
             _userService = userService;
         }
 
@@ -38,10 +37,11 @@ namespace Dashboard.Api.Controllers.Auth
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] AuthRegisterInputModel registerInfo)
         {
-            // This is to be improved one time further
+            if (await _userService.RegisterAsync(
+                _mapper.Map<AuthRegisterInputModel, AuthRegisterDto>(registerInfo)))
+                return Ok(new AuthResultModel() { Message = "Registered" });
 
-            await _userService.RegisterAsync(registerInfo);
-            return Ok(new AuthResultModel() { Message = "Registered" });
+            return BadRequest(new AuthResultModel { Message = "Username is already taken" });
         }
 
         [AllowAnonymous]
@@ -49,12 +49,12 @@ namespace Dashboard.Api.Controllers.Auth
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] AuthLoginInputModel loginInfo)
         {
-            var user = await _userService.AuthenticateAsync(loginInfo);
+            var authInfo = await _userService.AuthenticateAsync(_mapper.Map<AuthLoginInputModel, AuthLoginDto>(loginInfo));
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+            if (authInfo == null)
+                return BadRequest(new AuthResultModel { Message = "Username or password is incorrect" });
 
-            return Ok(user);
+            return Ok(_mapper.Map<AuthDto, AuthResultModel>(authInfo));
         }
     }
 }

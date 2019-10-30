@@ -1,7 +1,8 @@
-﻿using Dashboard.Core;
+﻿using AutoMapper;
+using Dashboard.Core;
+using Dashboard.Dtos.Auth;
 using Dashboard.Entitites;
 using Dashboard.Repositories.Services;
-using Dashboard.ViewModels.Auth;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,24 +15,27 @@ namespace Dashboard.Services
 {
     public interface IUserService
     {
-        Task RegisterAsync(AuthRegisterInputModel registerInfo);
-        Task<AuthResultModel> AuthenticateAsync(AuthLoginInputModel loginInfo);
+        Task<bool> RegisterAsync(AuthRegisterDto registerInfo);
+        Task<AuthDto> AuthenticateAsync(AuthLoginDto loginInfo);
     }
 
     public class UserService : IUserService
     {
         private readonly AppSettings _appSettings;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public UserService(
             IOptions<AppSettings> appSettings,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IMapper mapper)
         {
             _appSettings = appSettings.Value;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task<AuthResultModel> AuthenticateAsync(AuthLoginInputModel loginInfo)
+        public async Task<AuthDto> AuthenticateAsync(AuthLoginDto loginInfo)
         {
             var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(x => x.Username == loginInfo.Username && x.Password == loginInfo.Password);
 
@@ -53,26 +57,22 @@ namespace Dashboard.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
     
-            var result = new AuthResultModel(); // separate dto - viewmodels?
+            var result = new AuthDto();
             result.Token = tokenHandler.WriteToken(token);
             return result;
         }
 
-        public async Task RegisterAsync(AuthRegisterInputModel registerInfo)
+        public async Task<bool> RegisterAsync(AuthRegisterDto registerInfo)
         {
-            // TODO: use mapping for that.
+            if (await _unitOfWork.UserRepository.FirstOrDefaultAsync(
+                u => u.Username.ToLower() == registerInfo.Username.ToLower()) != null)
+                return false;
 
-
-            var user = new User()
-            {
-                FirstName = registerInfo.FirstName,
-                LastName = registerInfo.LastName,
-                Username = registerInfo.Username,
-                Password = registerInfo.Password,
-            };
-
+            var user = _mapper.Map<AuthRegisterDto, User>(registerInfo);
+            
             _unitOfWork.UserRepository.Add(user);
             await _unitOfWork.SaveChangesAsync();
+            return true;
         }
     }
 }

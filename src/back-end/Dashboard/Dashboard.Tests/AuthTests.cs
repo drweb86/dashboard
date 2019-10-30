@@ -20,19 +20,22 @@ namespace Dashboard.Tests
         [Fact]
         public async Task CanRegisterAndLogin()
         {
+            var userName = Guid.NewGuid().ToString();
+            var password = "The Top Secret";
+
             var registerResult = await _client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth/Register", new AuthRegisterInputModel() {
                 FirstName = "Vasya",
                 LastName = "Kurochkin",
-                Username = "Vasilina",
-                Password = "The Top Secret"
+                Username = userName,
+                Password = password
             });
 
             Assert.Equal("Registered", registerResult.Message);
 
             var loginResult = await _client.PostAsync<AuthLoginInputModel, AuthResultModel>("/Auth/Login", new AuthLoginInputModel()
             {
-                Username = "Vasilina",
-                Password = "The Top Secret"
+                Username = userName,
+                Password = password
             });
             Assert.NotEqual("", loginResult.Token);
             Assert.NotNull(loginResult.Token);
@@ -41,8 +44,8 @@ namespace Dashboard.Tests
             {
                 var badloginResult = await _client.PostAsync<AuthLoginInputModel, AuthResultModel>("/Auth/Login", new AuthLoginInputModel()
                 {
-                    Username = "Vasilina",
-                    Password = "1111111The Top Secret"
+                    Username = userName,
+                    Password = "1111111" + password
                 });
             });
         }

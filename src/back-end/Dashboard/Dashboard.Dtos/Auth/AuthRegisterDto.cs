@@ -1,8 +1,9 @@
-﻿namespace Dashboard.Entitites
+﻿using System;
+
+namespace Dashboard.Dtos.Auth
 {
-    public class User
+    public class AuthRegisterDto
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }

@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
@@ -12,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dashboard.Core\Dashboard.Core.csproj" />
+    <ProjectReference Include="..\Dashboard.Dtos\Dashboard.Dtos.csproj" />
     <ProjectReference Include="..\Dashboard.Repositories\Dashboard.Repositories.csproj" />
-    <ProjectReference Include="..\Dashboard.ViewModels\Dashboard.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
