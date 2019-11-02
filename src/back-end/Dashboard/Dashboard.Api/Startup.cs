@@ -81,6 +81,7 @@ namespace Dashboard.Api
             // configure DI for application services
             services.AddScoped<DashboardDbContext, DashboardDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IStickerService, StickerService>();
             services.AddScoped<IUserService, UserService>();
 
         }

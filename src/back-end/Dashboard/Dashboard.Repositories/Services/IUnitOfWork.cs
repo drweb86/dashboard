@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Dashboard.Repositories.Services
 {
     public interface IUnitOfWork
     {
         public IUserRepository UserRepository { get; }
+        public IStickerRepository StickerRepository { get; }
         public Task SaveChangesAsync();
     }
 
@@ -18,9 +16,11 @@ namespace Dashboard.Repositories.Services
         {
             _dbContext = dbContext;
             UserRepository = new UserRepository(dbContext);
+            StickerRepository = new StickerRepository(dbContext);
         }
 
         public IUserRepository UserRepository { get; private set; }
+        public IStickerRepository StickerRepository { get; private set; }
 
         public async Task SaveChangesAsync()
         {
