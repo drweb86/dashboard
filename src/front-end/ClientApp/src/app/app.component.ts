@@ -2,8 +2,18 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'app';
+  menuItems: { title: string, url: string }[] = [
+    {
+      title: 'Home',
+      url: '/',
+    },
+    {
+      title: 'Dashboard',
+      url: '/my-dashboard',
+    },
+  ];
 }
