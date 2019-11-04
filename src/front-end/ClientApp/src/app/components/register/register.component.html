@@ -1,0 +1,38 @@
+<div *ngIf="inProgress" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-spinner [diameter]="50">
+    </mat-spinner>
+</div>
+
+<form *ngIf="!inProgress" [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="createUser()"
+    fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <h2>Create an account</h2>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="First Name" formControlName="firstName">
+        <mat-error *ngIf="hasError('firstName', 'required')">First Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="Last Name" formControlName="lastName">
+        <mat-error *ngIf="hasError('lastName', 'required')">Last Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="User Name (used for login)" formControlName="username">
+        <mat-error *ngIf="hasError('username', 'required')">User Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="Password" formControlName="password">
+        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+        <mat-error *ngIf="hasError('password', 'match')">Repeat Password and Password should match</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" placeholder="Repeat Password" formControlName="repeatPassword">
+        <mat-error *ngIf="hasError('repeatPassword', 'required')">Repeat Password is required</mat-error>
+        <mat-error *ngIf="hasError('repeatPassword', 'match')">Repeat Password and Password should match</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="!registerForm.valid">Create</button>
+</form>

@@ -15,6 +15,7 @@ using Dashboard.Services;
 using Dashboard.Repositories.Services;
 using AutoMapper;
 using Dashboard.Api.Mappings;
+using Microsoft.IdentityModel.Logging;
 
 namespace Dashboard.Api
 {
@@ -92,6 +93,7 @@ namespace Dashboard.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                IdentityModelEventSource.ShowPII = true;
             }
             else
             {
