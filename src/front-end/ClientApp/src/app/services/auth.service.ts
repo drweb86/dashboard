@@ -22,7 +22,6 @@ export class AuthService {
     }
 
     login(info: AuthLoginInputModel): Observable<void> {
-        console.log(this._baseUrl);
         return this._http
             .post<AuthResultModel>(`${this._baseUrl}auth/login`, info)
             .pipe(
@@ -40,14 +39,21 @@ export class AuthService {
     isAuthenticated(): Observable<boolean> {
         const token = this.getToken();
         if (token === undefined) {
+            console.log('No2');
             return of(false);
         }
 
         return this._http
             .post<AuthResultModel>(`${this._baseUrl}auth/test`, {})
             .pipe(
-                switchMap(() => of(true)),
-                catchError(() => of(false))
+                switchMap(() => {
+                    console.log('Is');
+                    return of(true)
+                }),
+                catchError(() => {
+                    console.log('No1');
+                    return of(false);
+                })
             );
     }
 }

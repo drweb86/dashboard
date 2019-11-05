@@ -7,8 +7,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './components/login/login.component';
 import { AboutComponent } from './components/about/about.component';
@@ -22,8 +20,6 @@ import { AuthInterceptor } from './services/auth-interceptor';
   declarations: [
     AppComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     LoginComponent,
     LogoutComponent,
     AboutComponent,
@@ -37,9 +33,9 @@ import { AuthInterceptor } from './services/auth-interceptor';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
+      // { path: 'counter', component: CounterComponent },
       { path: 'my-dashboard', component: DashboardComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      // { path: 'fetch-data', component: FetchDataComponent },
     ]),
     BrowserAnimationsModule
   ],

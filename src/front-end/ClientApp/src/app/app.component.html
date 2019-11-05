@@ -6,7 +6,11 @@
         <h1>Dashboard</h1>
         <span class="menu-spacer"></span>
         <div>
-            <a mat-button *ngFor="let menuItem of menuItems" [routerLink]="menuItem.url"> {{menuItem.title}} </a>
+            <ng-container *ngFor="let menuItem of menuItems">
+                <a mat-button *ngIf="menuItem.visible" [routerLink]="menuItem.url"
+                    (click)="menuItem.action ? menuItem.action(): true">
+                    {{menuItem.title}} </a>
+            </ng-container>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
@@ -14,7 +18,11 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav>
         <mat-nav-list>
-            <a mat-list-item *ngFor="let menuItem of menuItems" [routerLink]="menuItem.url"> {{menuItem.title}} </a>
+            <ng-container *ngFor="let menuItem of menuItems">
+                <a mat-list-item *ngIf="menuItem.visible" [routerLink]="menuItem.url"
+                    (click)="menuItem.action ? menuItem.action(): true">
+                    {{menuItem.title}} </a>
+            </ng-container>
 
             <a mat-list-item (click)="sidenav.toggle()" [routerLink]="" mat-list-item>Close</a>
         </mat-nav-list>

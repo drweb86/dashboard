@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -44,7 +43,13 @@ export class LoginComponent implements OnInit {
 
     } catch (error) {
       this.inProgress = false;
-      alert(error.error.message);
+      if (error.error && error.error.message) {
+        alert(error.error.message);
+      } else {
+        console.error(error);
+        alert('Error');
+      }
+
     }
   }
 }

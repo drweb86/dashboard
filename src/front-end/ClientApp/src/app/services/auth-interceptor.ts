@@ -20,7 +20,9 @@ export class AuthInterceptor implements HttpInterceptor {
         req: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        if (req.headers.get('No-Auth') === 'True') {
+        const anonymous: string[] = ['/auth/login', '/auth/register'];
+
+        if (anonymous.some(z => req.url.endsWith(z))) {
             return next.handle(req.clone());
         }
 
