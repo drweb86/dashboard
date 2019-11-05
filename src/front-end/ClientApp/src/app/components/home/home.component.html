@@ -1,6 +1,10 @@
 <p>The main purpose of this site is to help you stay organised by taking notes on the dashboard.</p>
 
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="30px">
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="30px" *ngIf="isAuthenticated === false">
     <app-register></app-register>
     <app-login></app-login>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="30px" *ngIf="isAuthenticated">
+    <button mat-raised-button color="primary" (click)="goToDashboard()">Go to My Dashboard</button>
 </div>

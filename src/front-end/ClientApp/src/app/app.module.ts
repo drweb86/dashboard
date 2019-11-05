@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AngularAndMaterialModule } from 'src/angular-and-material/angular-and-material.module';
 import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './services/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,13 @@ import { AuthService } from './services/auth.service';
     ]),
     BrowserAnimationsModule
   ],
-  providers: [AuthService],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
