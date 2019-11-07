@@ -16,9 +16,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private _authService: AuthService) {
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this._subscriptions.push(this._authService.isAuthorised$.subscribe(isAuthorised => this.isAuthenticated = isAuthorised));
-    await this._authService.isAuthenticated().toPromise();
+
+    // not waiting
+    this._authService.isAuthenticated().toPromise();
   }
 
   ngOnDestroy(): void {

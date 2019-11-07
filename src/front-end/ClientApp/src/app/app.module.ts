@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { AngularAndMaterialModule } from 'src/angular-and-material/angular-and-material.module';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { AuthorisedGuard } from './guards/authorised.guard';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      // { path: 'counter', component: CounterComponent },
-      { path: 'my-dashboard', component: DashboardComponent },
-      // { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'my-dashboard', component: DashboardComponent, canActivate: [AuthorisedGuard] },
     ]),
     BrowserAnimationsModule
   ],
@@ -45,7 +44,8 @@ import { AuthInterceptor } from './services/auth-interceptor';
       useClass: AuthInterceptor,
       multi: true
     },
-    AuthService],
+    AuthService,
+    AuthorisedGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,7 +9,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private readonly logoutName = 'Log Out';
+  private readonly _logoutName = 'Log Out';
+  private readonly _dashboardTitle = 'Dashboard';
   private _subscriptions: Subscription[] = [];
 
   menuItems: { title: string, url?: string, action?: () => {}, visible: boolean }[] = [
@@ -19,12 +20,12 @@ export class AppComponent implements OnInit, OnDestroy {
       visible: true,
     },
     {
-      title: 'Dashboard',
+      title: this._dashboardTitle,
       url: '/my-dashboard',
       visible: true,
     },
     {
-      title: this.logoutName,
+      title: this._logoutName,
       action: () => this.logout(),
       visible: false,
     }
@@ -41,9 +42,14 @@ export class AppComponent implements OnInit, OnDestroy {
     await this._router.navigateByUrl('/');
   }
 
-  async ngOnInit(): Promise<void> {
-    this._subscriptions.push(this._authService.isAuthorised$.subscribe(isAuthorised => this.menuItems.find(z => z.title == this.logoutName).visible = isAuthorised));
-    await this._authService.isAuthenticated().toPromise();
+  ngOnInit(): void {
+    this._subscriptions.push(this._authService.isAuthorised$.subscribe(isAuthorised => {
+      this.menuItems.find(z => z.title == this._logoutName).visible = isAuthorised;
+      this.menuItems.find(z => z.title == this._dashboardTitle).visible = isAuthorised;
+    }));
+
+    // not waiting.
+    this._authService.isAuthenticated().toPromise();
   }
 
   ngOnDestroy(): void {
