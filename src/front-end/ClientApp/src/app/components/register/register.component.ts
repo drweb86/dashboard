@@ -89,8 +89,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       await this._router.navigate(['/my-dashboard']);
 
     } catch (error) {
-      this.inProgress = false;
       alert(error.error.message);
+    } finally {
+      this.inProgress = false;
     }
   }
 }

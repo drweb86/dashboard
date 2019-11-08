@@ -16,6 +16,9 @@ import { AngularAndMaterialModule } from 'src/angular-and-material/angular-and-m
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthorisedGuard } from './guards/authorised.guard';
+import { StickerService } from './services/sticker.service';
+import { StickerComponent } from './components/sticker/sticker.component';
+import { NgDragDropModule } from 'ng-drag-drop';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { AuthorisedGuard } from './guards/authorised.guard';
     AboutComponent,
     DashboardComponent,
     RegisterComponent,
+    StickerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,7 +40,9 @@ import { AuthorisedGuard } from './guards/authorised.guard';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'my-dashboard', component: DashboardComponent, canActivate: [AuthorisedGuard] },
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgDragDropModule,
+    NgDragDropModule.forRoot(),
   ],
   providers: [
     {
@@ -45,6 +51,7 @@ import { AuthorisedGuard } from './guards/authorised.guard';
       multi: true
     },
     AuthService,
+    StickerService,
     AuthorisedGuard],
   bootstrap: [AppComponent]
 })

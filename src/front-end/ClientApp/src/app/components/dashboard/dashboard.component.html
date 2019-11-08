@@ -1,1 +1,16 @@
-<p>dashboard works!</p>
+<div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <mat-spinner [diameter]="50">
+    </mat-spinner>
+</div>
+
+<div *ngIf="!isLoading" fxLayout="column" fxLayoutGap="10px">
+    <div class="toolbox">
+        <span>Toolbox</span>
+    </div>
+
+    <div class="dashboard" droppable [dropScope]="'dashboard-scope'">
+        <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" draggable
+            [dragScope]="'dashboard-scope'" [style.top]="sticker.y + 'px'" [style.left]="sticker.x + 'px'"
+            style="position: absolute;"></app-sticker>
+    </div>
+</div>

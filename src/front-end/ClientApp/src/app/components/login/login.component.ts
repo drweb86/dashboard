@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
       await this._router.navigate(['/my-dashboard']);
 
     } catch (error) {
-      this.inProgress = false;
+
       if (error.error && error.error.message) {
         alert(error.error.message);
       } else {
@@ -50,6 +50,8 @@ export class LoginComponent implements OnInit {
         alert('Error');
       }
 
+    } finally {
+      this.inProgress = false;
     }
   }
 }
