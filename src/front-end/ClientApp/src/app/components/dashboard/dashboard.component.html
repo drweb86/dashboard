@@ -4,13 +4,26 @@
 </div>
 
 <div *ngIf="!isLoading" fxLayout="column" fxLayoutGap="10px">
-    <div class="toolbox">
-        <span>Toolbox</span>
+    <div class="toolbox" fxLayout="row" fxLayoutGap="10px">
+        <button mat-raised-button color="primary" (click)="onCreate()">
+            Create
+        </button>
+
+        <button mat-raised-button color="accent" (click)="onEdit()" [disabled]="selectedStickerId === undefined">
+            Edit
+        </button>
+
+        <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="selectedStickerId === undefined">
+            Delete
+        </button>
     </div>
 
-    <div class="dashboard" droppable [dropScope]="'dashboard-scope'">
+    <div class="dashboard" droppable [dropScope]="'dashboard-scope'" #dashboard>
         <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" draggable
-            [dragScope]="'dashboard-scope'" [style.top]="sticker.y + 'px'" [style.left]="sticker.x + 'px'"
-            style="position: absolute;"></app-sticker>
+            [class.selected]="selectedStickerId === sticker.id" [dragScope]="'dashboard-scope'"
+            [style.top]="sticker.y + 'px'" [style.left]="sticker.x + 'px'"
+            [isSelected]="selectedStickerId === sticker.id" style="position: absolute;" (click)="onSelect(sticker.id)"
+            (dragStart)="dragStart($event, sticker)" (onDragEnd)="onDragEnded($event)">
+        </app-sticker>
     </div>
 </div>

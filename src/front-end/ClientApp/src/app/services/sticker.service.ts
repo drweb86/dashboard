@@ -10,8 +10,8 @@ export class StickerService {
     constructor(private _http: HttpClient, @Inject('BASE_URL') private _baseUrl: string) {
     }
 
-    add(info: StickerAddInputModel): Observable<void> {
-        return this._http.post<void>(`${this._baseUrl}sticker`, info);
+    add(info: StickerAddInputModel): Observable<StickerResultModel> {
+        return this._http.post<StickerResultModel>(`${this._baseUrl}sticker`, info);
     }
 
     update(info: StickerUpdateInputModel): Observable<void> {

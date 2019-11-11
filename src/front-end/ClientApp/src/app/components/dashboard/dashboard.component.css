@@ -3,3 +3,7 @@
   min-height: 100vh;
   position: relative;
 }
+
+app-sticker.selected {
+  z-index: 1000;
+}

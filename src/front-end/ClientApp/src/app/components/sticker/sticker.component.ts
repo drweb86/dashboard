@@ -9,6 +9,7 @@ import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 export class StickerComponent implements OnInit {
 
   @Input() item: StickerResultModel;
+  @Input() isSelected: boolean;
 
   constructor() { }
 
