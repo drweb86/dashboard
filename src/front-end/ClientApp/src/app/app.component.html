@@ -7,9 +7,19 @@
         <span class="menu-spacer"></span>
         <div>
             <ng-container *ngFor="let menuItem of menuItems">
-                <a mat-button *ngIf="menuItem.visible" [routerLink]="menuItem.url"
-                    (click)="menuItem.action ? menuItem.action(): true">
-                    {{menuItem.title}} </a>
+                <ng-container *ngIf="menuItem.visible">
+                    <ng-container *ngIf="menuItem.action !== undefined">
+                        <a mat-raised-button color="primary" (click)="menuItem.action()">
+                            {{menuItem.title}} </a>
+                    </ng-container>
+
+                    <ng-container *ngIf="menuItem.action === undefined">
+                        <a mat-button [routerLink]="menuItem.url" (click)="menuItem.action ? menuItem.action(): true">
+                            {{menuItem.title}} </a>
+                    </ng-container>
+
+
+                </ng-container>
             </ng-container>
         </div>
     </mat-toolbar-row>

@@ -18,7 +18,6 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthorisedGuard } from './guards/authorised.guard';
 import { StickerService } from './services/sticker.service';
 import { StickerComponent } from './components/sticker/sticker.component';
-import { NgDragDropModule } from 'ng-drag-drop';
 
 @NgModule({
   declarations: [
@@ -38,11 +37,10 @@ import { NgDragDropModule } from 'ng-drag-drop';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'about', component: AboutComponent, pathMatch: 'full' },
       { path: 'my-dashboard', component: DashboardComponent, canActivate: [AuthorisedGuard] },
     ]),
     BrowserAnimationsModule,
-    NgDragDropModule,
-    NgDragDropModule.forRoot(),
   ],
   providers: [
     {

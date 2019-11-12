@@ -25,6 +25,11 @@ export class AppComponent implements OnInit, OnDestroy {
       visible: true,
     },
     {
+      title: 'About',
+      url: '/about',
+      visible: true,
+    },
+    {
       title: this._logoutName,
       action: () => this.logout(),
       visible: false,

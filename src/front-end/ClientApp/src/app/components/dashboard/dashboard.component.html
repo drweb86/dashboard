@@ -18,12 +18,12 @@
         </button>
     </div>
 
-    <div class="dashboard" droppable [dropScope]="'dashboard-scope'" #dashboard>
-        <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" draggable
-            [class.selected]="selectedStickerId === sticker.id" [dragScope]="'dashboard-scope'"
-            [style.top]="sticker.y + 'px'" [style.left]="sticker.x + 'px'"
-            [isSelected]="selectedStickerId === sticker.id" style="position: absolute;" (click)="onSelect(sticker.id)"
-            (dragStart)="dragStart($event, sticker)" (onDragEnd)="onDragEnded($event)">
+    <div class="dashboard" #dashboard>
+        <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker"
+            [class.selected]="selectedStickerId === sticker.id" [style.top]="sticker.y + 'px'"
+            [style.left]="sticker.x + 'px'" [isSelected]="selectedStickerId === sticker.id" style="position: absolute;"
+            [attr.id]="'sticker-item-' + sticker.id" (click)="onSelect(sticker.id)"
+            (mousedown)="mousedown($event, sticker.id)" (mousemove)="mousemove($event)" (mouseup)="mouseup($event)">
         </app-sticker>
     </div>
 </div>

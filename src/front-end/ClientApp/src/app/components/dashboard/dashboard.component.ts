@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { StickerService } from '../../services/sticker.service';
 import { StickerResultModel } from '../../models/stickers/sticker-result-model';
-import { Router } from '@angular/router';
 import { StickerAddInputModel } from 'src/app/models/stickers/sticker-add-input-model';
 import { StickerUpdateInputModel } from '../../models/stickers/sticker-update-input-model';
 
@@ -16,15 +15,9 @@ export class DashboardComponent implements OnInit {
   selectedStickerId?: number;
   @ViewChild('dashboard', { static: false }) dashboard: ElementRef<HTMLDivElement>;
 
-  constructor(private _stickerService: StickerService, private _router: Router) { }
+  constructor(private _stickerService: StickerService) { }
 
   async ngOnInit(): Promise<void> {
-    if (navigator.userAgent.search("Firefox") > -1) {
-      alert('Firefox browser is not supported. They did not implement getting coordinates for DROP event https://bugzilla.mozilla.org/show_bug.cgi?id=505521. for 10 years.');
-      await this._router.navigate(['/']);
-    }
-
-
     this.isLoading = true;
     this.stickers = [];
     try {
@@ -105,46 +98,52 @@ export class DashboardComponent implements OnInit {
     this.selectedStickerId = id;
   }
 
-  dragStart(e: { screenX: number, screenY: number, pageX: number, pageY: number }, sticker: StickerResultModel): void {
-    // const dashboardBoundRectangle = this.dashboard.nativeElement.getBoundingClientRect();
-    // const top = dashboardBoundRectangle.top;
-    // const left = dashboardBoundRectangle.left;
-    // console.log(`Local Top = ${top}, Left = ${left}`);
-    // console.log(`Global Top = ${top + window.scrollY}, Left = ${left + window.scrollX}`);
-    // console.log(`onDragEnd X = ${e.screenX - left}, Y = ${e.screenY - top}`);
-    console.log('Start ', e.pageX, e.pageY);
-  }
+  // drag and drop.
+  // due to Firefox not supporting Drop we have custom implementation.
+  private _dragOffset: { left: number, top: number } = { left: 0, top: 0 };
+  private _isDragging = false;
+  private _draggedElement: HTMLElement;
+  private _draggedItem: StickerResultModel;
 
-  onDragEnd(e: { screenX: number, screenY: number, pageX: number, pageY: number }, sticker: StickerResultModel): void {
-    // const dashboardBoundRectangle = this.dashboard.nativeElement.getBoundingClientRect();
-    // const top = dashboardBoundRectangle.top;
-    // const left = dashboardBoundRectangle.left;
-    // console.log(`Local Top = ${top}, Left = ${left}`);
-    // console.log(`Global Top = ${top + window.scrollY}, Left = ${left + window.scrollX}`);
-    // console.log(`onDragEnd X = ${e.screenX - left}, Y = ${e.screenY - top}`);
-    console.log('End ', e.pageX, e.pageY);
-  }
-
-  // https://stackoverflow.com/questions/42334722/drag-to-move-a-component-around-the-page
-
-  onDragEnded(event) {
-    console.log(event.clientX);
-    console.log(event.clientY);
-
-    // let element = event.source.getRootElement();
-    // let boundingClientRect = element.getBoundingClientRect();
-    // let parentPosition = this.getPosition(element);
-    // console.log('x: ' + (boundingClientRect.x - parentPosition.left), 'y: ' + (boundingClientRect.y - parentPosition.top));
-  }
-
-  getPosition(el) {
-    let x = 0;
-    let y = 0;
-    while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-      x += el.offsetLeft - el.scrollLeft;
-      y += el.offsetTop - el.scrollTop;
-      el = el.offsetParent;
+  mousedown($event, id: number): void {
+    this._isDragging = true;
+    this._draggedElement = document.getElementById(`sticker-item-${id}`);
+    this._draggedItem = this.stickers.find(z => z.id === id);
+    this._dragOffset = {
+      left: this._draggedElement.offsetLeft - $event.clientX,
+      top: this._draggedElement.offsetTop - $event.clientY,
     }
-    return { top: y, left: x };
+  }
+
+  async mouseup(): Promise<void> {
+    if (this._isDragging) {
+
+      this._isDragging = false;
+
+      // update in database
+      const item: StickerUpdateInputModel = {
+        htmlColor: this._draggedItem.htmlColor,
+        itemId: this._draggedItem.id,
+        x: this._draggedItem.x,
+        y: this._draggedItem.y,
+        text: this._draggedItem.text,
+      };
+
+      await this._stickerService.update(item).toPromise();
+    }
+  }
+
+  mousemove($event): void {
+    $event.preventDefault();
+
+    if (this._isDragging) {
+      var mousePosition = {
+        x: $event.clientX,
+        y: $event.clientY
+      };
+
+      this._draggedItem.x = mousePosition.x + this._dragOffset.left;
+      this._draggedItem.y = mousePosition.y + this._dragOffset.top;
+    }
   }
 }
