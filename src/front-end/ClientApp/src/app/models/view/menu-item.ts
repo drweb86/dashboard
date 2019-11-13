@@ -4,4 +4,5 @@ export class MenuItem {
     action?: () => {};
     visible: boolean;
     right: boolean;
+    icon?: string;
 }

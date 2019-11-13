@@ -10,7 +10,8 @@
             </ng-container>
         </div>
 
-        <span fxFlex></span>
+        <span fxFlex>
+        </span>
 
         <ng-container *ngFor="let menuItem of menuItems">
             <app-menu-item [item]="menuItem" *ngIf="menuItem.right"></app-menu-item>

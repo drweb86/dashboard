@@ -20,24 +20,28 @@ export class AppComponent implements OnInit, OnDestroy {
       url: '/',
       visible: true,
       right: false,
+      icon: undefined,
     },
     {
       title: this._dashboardTitle,
       url: '/my-dashboard',
       visible: true,
       right: false,
+      icon: undefined,
     },
     {
       title: 'About',
       url: '/about',
       visible: true,
       right: false,
+      icon: undefined,
     },
     {
       title: this._logoutName,
       action: () => this.logout(),
       visible: false,
       right: true,
+      icon: 'exit_to_app',
     }
   ];
 
