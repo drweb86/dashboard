@@ -33,8 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
       title: 'About',
       url: '/about',
       visible: true,
-      right: false,
-      icon: undefined,
+      right: true,
+      icon: 'info',
     },
     {
       title: this._logoutName,
