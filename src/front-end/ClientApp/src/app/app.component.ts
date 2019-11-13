@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   menuItems: { title: string, url?: string, action?: () => {}, visible: boolean }[] = [
     {
-      title: 'Home',
+      title: 'Sticker-Board',
       url: '/',
       visible: true,
     },
