@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private readonly _logoutName = 'Log Out';
-  private readonly _dashboardTitle = 'Dashboard';
+  private readonly _dashboardTitle = 'My Dashboard';
   private _subscriptions: Subscription[] = [];
 
   menuItems: { title: string, url?: string, action?: () => {}, visible: boolean }[] = [
