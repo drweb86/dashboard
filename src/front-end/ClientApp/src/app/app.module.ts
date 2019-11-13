@@ -17,6 +17,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
 import { AuthorisedGuard } from './guards/authorised.guard';
 import { StickerService } from './services/sticker.service';
 import { StickerComponent } from './components/sticker/sticker.component';
+import { MenuItemComponent } from './components/menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { StickerComponent } from './components/sticker/sticker.component';
     DashboardComponent,
     RegisterComponent,
     StickerComponent,
+    MenuItemComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

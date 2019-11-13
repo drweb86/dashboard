@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MenuItem } from 'src/app/models/view/menu-item';
 
 @Component({
   selector: 'app-root',
@@ -13,26 +14,30 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly _dashboardTitle = 'My Dashboard';
   private _subscriptions: Subscription[] = [];
 
-  menuItems: { title: string, url?: string, action?: () => {}, visible: boolean }[] = [
+  menuItems: MenuItem[] = [
     {
       title: 'Sticker-Board',
       url: '/',
       visible: true,
+      right: false,
     },
     {
       title: this._dashboardTitle,
       url: '/my-dashboard',
       visible: true,
+      right: false,
     },
     {
       title: 'About',
       url: '/about',
       visible: true,
+      right: false,
     },
     {
       title: this._logoutName,
       action: () => this.logout(),
       visible: false,
+      right: true,
     }
   ];
 

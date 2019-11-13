@@ -1,0 +1,7 @@
+<ng-container *ngIf="item.visible">
+    <a mat-raised-button color="primary" (click)="item.action()" *ngIf="item.action !== undefined">
+        {{item.title}} </a>
+
+    <a mat-button [routerLink]="item.url" *ngIf="item.action === undefined">
+        {{item.title}} </a>
+</ng-container>

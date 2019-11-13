@@ -6,21 +6,15 @@
         <span class="menu-spacer"></span>
         <div>
             <ng-container *ngFor="let menuItem of menuItems">
-                <ng-container *ngIf="menuItem.visible">
-                    <ng-container *ngIf="menuItem.action !== undefined">
-                        <a mat-raised-button color="primary" (click)="menuItem.action()">
-                            {{menuItem.title}} </a>
-                    </ng-container>
-
-                    <ng-container *ngIf="menuItem.action === undefined">
-                        <a mat-button [routerLink]="menuItem.url" (click)="menuItem.action ? menuItem.action(): true">
-                            {{menuItem.title}} </a>
-                    </ng-container>
-
-
-                </ng-container>
+                <app-menu-item [item]="menuItem" *ngIf="!menuItem.right"></app-menu-item>
             </ng-container>
         </div>
+
+        <span fxFlex></span>
+
+        <ng-container *ngFor="let menuItem of menuItems">
+            <app-menu-item [item]="menuItem" *ngIf="menuItem.right"></app-menu-item>
+        </ng-container>
     </mat-toolbar-row>
 </mat-toolbar>
 
