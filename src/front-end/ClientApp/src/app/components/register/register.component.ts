@@ -22,8 +22,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, this.matchPasswordValidator]),
       repeatPassword: new FormControl('', [Validators.required, this.matchPasswordValidator]),
@@ -70,8 +68,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const formValue = this.registerForm.value;
 
     const registerInfo: AuthRegisterInputModel = {
-      firstName: formValue.firstName,
-      lastName: formValue.lastName,
       username: formValue.username,
       password: formValue.password,
     };

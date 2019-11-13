@@ -24,8 +24,6 @@ namespace Dashboard.Tests
             var password = "The Top Secret";
 
             var registerResult = await _client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth/Register", new AuthRegisterInputModel() {
-                FirstName = "Vasya",
-                LastName = "Kurochkin",
                 Username = userName,
                 Password = password
             });
@@ -57,8 +55,6 @@ namespace Dashboard.Tests
             {
                 var testResult = await _client.PostAsync<AuthRegisterInputModel, AuthResultModel>("/Auth/Test", new AuthRegisterInputModel()
                 {
-                    FirstName = "Vasya",
-                    LastName = "Kurochkin",
                     Username = "Vasilina",
                     Password = "The Top Secret"
                 });

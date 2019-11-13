@@ -14,15 +14,11 @@ namespace Dashboard.Api.Mappings
         public AutomapperProfile()
         {
             CreateMap<AuthRegisterDto, User>()
-                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
-                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
                 .ForMember(d => d.Username, opts => opts.MapFrom(s => s.Username))
                 .ForMember(d => d.Password, opts => opts.MapFrom(s => s.Password))
                 .ForAllOtherMembers(opts => opts.Ignore());
 
             CreateMap<AuthRegisterInputModel, AuthRegisterDto>()
-                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.FirstName))
-                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.LastName))
                 .ForMember(d => d.Username, opts => opts.MapFrom(s => s.Username))
                 .ForMember(d => d.Password, opts => opts.MapFrom(s => s.Password))
                 .ForAllOtherMembers(opts => opts.Ignore());
