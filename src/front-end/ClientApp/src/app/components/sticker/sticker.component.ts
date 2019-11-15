@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 
 @Component({
@@ -9,4 +9,19 @@ import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 export class StickerComponent {
   @Input() item: StickerResultModel;
   @Input() isSelected: boolean;
+
+  @Output() edit: EventEmitter<void> = new EventEmitter();
+  @Output() delete: EventEmitter<void> = new EventEmitter();
+
+  onEdit(): void {
+    this.edit.emit();
+  }
+
+  onDelete(): void {
+    this.delete.emit();
+  }
+
+  onHelp(): void {
+    alert('Click on Note and drag it with mouse to move it.');
+  }
 }

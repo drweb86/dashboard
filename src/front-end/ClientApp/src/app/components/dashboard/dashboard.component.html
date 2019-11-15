@@ -6,21 +6,14 @@
 <div *ngIf="!isLoading" fxLayout="column" fxLayoutGap="10px">
     <div class="toolbox" fxLayout="row" fxLayoutGap="10px">
         <button mat-raised-button color="primary" (click)="onCreate()">
+            <mat-icon matTooltip="Create">add</mat-icon>
             Create
-        </button>
-
-        <button mat-raised-button color="accent" (click)="onEdit()" [disabled]="selectedStickerId === undefined">
-            Edit
-        </button>
-
-        <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="selectedStickerId === undefined">
-            Delete
         </button>
     </div>
 
     <div class="dashboard" #dashboard>
-        <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker"
-            [class.selected]="selectedStickerId === sticker.id" [style.top]="sticker.y + 'px'"
+        <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" (edit)="onEdit()"
+            (delete)="onDelete()" [class.selected]="selectedStickerId === sticker.id" [style.top]="sticker.y + 'px'"
             [style.left]="sticker.x + 'px'" [isSelected]="selectedStickerId === sticker.id" style="position: absolute;"
             [attr.id]="'sticker-item-' + sticker.id" (mousedown)="mousedown($event, sticker.id);onSelect(sticker.id);"
             (mousemove)="mousemove($event)" (mouseup)="mouseup($event)">
