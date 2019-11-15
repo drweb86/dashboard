@@ -18,6 +18,7 @@ import { AuthorisedGuard } from './guards/authorised.guard';
 import { StickerService } from './services/sticker.service';
 import { StickerComponent } from './components/sticker/sticker.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
+import { ToolbarServie } from './services/toolbar.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MenuItemComponent } from './components/menu-item/menu-item.component';
       useClass: AuthInterceptor,
       multi: true
     },
+    ToolbarServie,
     AuthService,
     StickerService,
     AuthorisedGuard],

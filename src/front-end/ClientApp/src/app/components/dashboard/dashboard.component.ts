@@ -3,6 +3,7 @@ import { StickerService } from '../../services/sticker.service';
 import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 import { StickerAddInputModel } from 'src/app/models/stickers/sticker-add-input-model';
 import { StickerUpdateInputModel } from '../../models/stickers/sticker-update-input-model';
+import { ToolbarServie } from 'src/app/services/toolbar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,11 +16,22 @@ export class DashboardComponent implements OnInit {
   selectedStickerId?: number;
   @ViewChild('dashboard', { static: false }) dashboard: ElementRef<HTMLDivElement>;
 
-  constructor(private _stickerService: StickerService) { }
+  constructor(private _stickerService: StickerService,
+    private _toolbarServie: ToolbarServie) { }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
     this.stickers = [];
+    this._toolbarServie.componentButtons = [{
+      right: false,
+      title: 'Create',
+      visible: true,
+      action: () => this.onCreate(),
+      icon: 'add',
+      url: undefined,
+      forceShowText: true,
+    }];
+
     try {
       this.stickers = await this._stickerService.getAll().toPromise();
       this.selectedStickerId = this.stickers.length > 0 ? this.stickers[0].id : undefined;
@@ -89,9 +101,10 @@ export class DashboardComponent implements OnInit {
   }
 
   async onDelete(): Promise<void> {
+    this._toolbarServie.componentButtons = [];
     await this._stickerService.delete(this.selectedStickerId).toPromise();
     this.stickers = this.stickers.filter(z => z.id !== this.selectedStickerId);
-    this.selectedStickerId = this.stickers.length === 0 ? undefined : this.stickers[0].id;
+    this.selectedStickerId = this.stickers.length === 0 ? undefined : this.stickers[this.stickers.length - 1].id;
   }
 
   onSelect(id: number): void {

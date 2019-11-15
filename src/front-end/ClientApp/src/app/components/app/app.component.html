@@ -8,10 +8,18 @@
             <ng-container *ngFor="let menuItem of menuItems">
                 <app-menu-item [item]="menuItem" *ngIf="!menuItem.right"></app-menu-item>
             </ng-container>
+
+            <ng-container *ngFor="let menuItem of toolbarService.componentButtons">
+                <app-menu-item [item]="menuItem" *ngIf="!menuItem.right"></app-menu-item>
+            </ng-container>
         </div>
 
         <span fxFlex>
         </span>
+
+        <ng-container *ngFor="let menuItem of toolbarService.componentButtons">
+            <app-menu-item [item]="menuItem" *ngIf="menuItem.right"></app-menu-item>
+        </ng-container>
 
         <ng-container *ngFor="let menuItem of menuItems">
             <app-menu-item [item]="menuItem" *ngIf="menuItem.right"></app-menu-item>

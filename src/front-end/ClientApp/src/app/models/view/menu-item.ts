@@ -5,4 +5,5 @@ export class MenuItem {
     visible: boolean;
     right: boolean;
     icon?: string;
+    forceShowText?: boolean;
 }

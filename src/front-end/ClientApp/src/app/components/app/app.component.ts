@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MenuItem } from 'src/app/models/view/menu-item';
+import { ToolbarServie } from 'src/app/services/toolbar.service';
 
 @Component({
   selector: 'app-root',
@@ -47,8 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private _authService: AuthService,
-    private _router: Router) {
-
+    private _router: Router,
+    public toolbarService: ToolbarServie) {
   }
 
   private async logout(): Promise<void> {

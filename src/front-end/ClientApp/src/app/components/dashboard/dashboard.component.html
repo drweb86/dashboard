@@ -4,13 +4,6 @@
 </div>
 
 <div *ngIf="!isLoading" fxLayout="column" fxLayoutGap="10px">
-    <div class="toolbox" fxLayout="row" fxLayoutGap="10px">
-        <button mat-raised-button color="primary" (click)="onCreate()">
-            <mat-icon matTooltip="Create">add</mat-icon>
-            Create
-        </button>
-    </div>
-
     <div class="dashboard" #dashboard>
         <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" (edit)="onEdit()"
             (delete)="onDelete()" [class.selected]="selectedStickerId === sticker.id" [style.top]="sticker.y + 'px'"
