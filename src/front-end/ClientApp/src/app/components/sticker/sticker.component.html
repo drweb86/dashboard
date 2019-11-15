@@ -4,17 +4,21 @@
         <p class="sticker-note">{{item.text}}</p>
     </div>
 
-    <div class="toolbox" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" *ngIf="isSelected">
-        <button mat-stroked-button color="accent" (click)="onHelp()">
+    <div class="toolbox" fxLayout="row" fxLayoutAlign="end center" *ngIf="isSelected">
+        <button mat-icon-button color="accent" (click)="onHelp()">
             <mat-icon matTooltip="Click on Note and drag it with mouse to move it.">info</mat-icon>
         </button>
 
-        <button mat-stroked-button color="accent" (click)="onEdit()">
-            <mat-icon matTooltip="Edit">create</mat-icon>
+        <button mat-icon-button color="accent" (click)="onEdit()">
+            <mat-icon matTooltip="Edit (Shortcuts: E, e, Enter)">create</mat-icon>
         </button>
 
-        <button mat-stroked-button color="warn" (click)="onDelete()">
-            <mat-icon matTooltip="Delete">delete</mat-icon>
+        <button mat-icon-button color="accent" (click)="onChangeColor()">
+            <mat-icon matTooltip="Change Background to Random Color (Shortcuts: c, C)">color_lens</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" (click)="onDelete()">
+            <mat-icon matTooltip="Delete (Shortcuts: d, D, Delete)">delete</mat-icon>
         </button>
     </div>
 </ng-container>

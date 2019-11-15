@@ -12,6 +12,7 @@ export class StickerComponent {
 
   @Output() edit: EventEmitter<void> = new EventEmitter();
   @Output() delete: EventEmitter<void> = new EventEmitter();
+  @Output() changeColor: EventEmitter<void> = new EventEmitter();
 
   onEdit(): void {
     this.edit.emit();
@@ -19,6 +20,10 @@ export class StickerComponent {
 
   onDelete(): void {
     this.delete.emit();
+  }
+
+  onChangeColor(): void {
+    this.changeColor.emit();
   }
 
   onHelp(): void {

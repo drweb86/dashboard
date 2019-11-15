@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { StickerService } from '../../services/sticker.service';
 import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 import { StickerAddInputModel } from 'src/app/models/stickers/sticker-add-input-model';
@@ -42,6 +42,42 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'd':
+      case 'D':
+      case 'Delete':
+        if (this.selectedStickerId !== undefined) {
+          this.onDelete();
+        }
+        break;
+
+      case 'A':
+      case 'a':
+      case 'I':
+      case 'i':
+      case 'Insert':
+        this.onCreate();
+        break;
+
+      case 'e':
+      case 'E':
+      case 'Enter':
+        if (this.selectedStickerId !== undefined) {
+          this.onEdit();
+        }
+        break;
+
+      case 'c':
+      case 'C':
+        if (this.selectedStickerId !== undefined) {
+          this.onChangeColor();
+        }
+        break;
+    }
+  }
+
   stickerTrackBy(index: number, item: StickerResultModel): number {
     return item.id;
   }
@@ -63,7 +99,7 @@ export class DashboardComponent implements OnInit {
 
     // Add item
     const newSticker: StickerAddInputModel = {
-      htmlColor: 'orange',
+      htmlColor: this.getDistinctColor(),
       text: 'New Item',
       x: cornerX,
       y: cornerY,
@@ -78,6 +114,31 @@ export class DashboardComponent implements OnInit {
     // Select it.
 
     this.selectedStickerId = createdSticker.id;
+  }
+
+  private getDistinctColor(): string {
+    const goodColors = [
+      '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080',
+    ];
+
+    const randomNum = Math.floor(Math.random() * (goodColors.length + 1));
+    return goodColors[randomNum];
+  }
+
+  async onChangeColor(): Promise<void> {
+    const currentItem = this.stickers.find(z => z.id === this.selectedStickerId);
+
+    currentItem.htmlColor = this.getDistinctColor();
+
+    const item: StickerUpdateInputModel = {
+      htmlColor: currentItem.htmlColor,
+      itemId: currentItem.id,
+      x: currentItem.x,
+      y: currentItem.y,
+      text: currentItem.text,
+    };
+
+    await this._stickerService.update(item).toPromise();
   }
 
   async onEdit(): Promise<void> {
