@@ -1,5 +1,5 @@
 <ng-container *ngIf="item !== undefined">
-    <div class="sticker" [style.background]="item.htmlColor" [class.selected]="isSelected">
+    <div class="sticker noselect" [style.background]="item.htmlColor" [class.selected]="isSelected">
         <p class="sticker-note">{{item.text}}</p>
         <div class="sticker-header" *ngIf="isSelected">Click here to move</div>
         <!-- Consider move to bottom with close button -->
