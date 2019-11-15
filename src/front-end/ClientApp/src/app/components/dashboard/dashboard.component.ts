@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
 import { StickerService } from '../../services/sticker.service';
 import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 import { StickerAddInputModel } from 'src/app/models/stickers/sticker-add-input-model';
@@ -10,7 +10,7 @@ import { ToolbarServie } from 'src/app/services/toolbar.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
   stickers: StickerResultModel[] = [];
   selectedStickerId?: number;
@@ -18,6 +18,10 @@ export class DashboardComponent implements OnInit {
 
   constructor(private _stickerService: StickerService,
     private _toolbarServie: ToolbarServie) { }
+
+  ngOnDestroy(): void {
+    this._toolbarServie.componentButtons = [];
+  }
 
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
@@ -83,6 +87,10 @@ export class DashboardComponent implements OnInit {
   }
 
   async onCreate(): Promise<void> {
+    var text = prompt('Please enter text', '');
+    if (text == null || text == '') {
+      return;
+    }
 
     // Select position
     let cornerX = 50;
@@ -100,7 +108,7 @@ export class DashboardComponent implements OnInit {
     // Add item
     const newSticker: StickerAddInputModel = {
       htmlColor: this.getDistinctColor(),
-      text: 'New Item',
+      text: text,
       x: cornerX,
       y: cornerY,
     }
@@ -162,7 +170,6 @@ export class DashboardComponent implements OnInit {
   }
 
   async onDelete(): Promise<void> {
-    this._toolbarServie.componentButtons = [];
     await this._stickerService.delete(this.selectedStickerId).toPromise();
     this.stickers = this.stickers.filter(z => z.id !== this.selectedStickerId);
     this.selectedStickerId = this.stickers.length === 0 ? undefined : this.stickers[this.stickers.length - 1].id;
