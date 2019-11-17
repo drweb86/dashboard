@@ -16,6 +16,7 @@ using Dashboard.Repositories.Services;
 using AutoMapper;
 using Dashboard.Api.Mappings;
 using Microsoft.IdentityModel.Logging;
+using System.IO;
 
 namespace Dashboard.Api
 {
@@ -42,7 +43,8 @@ namespace Dashboard.Api
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "../../../front-end/ClientApp/dist";
+                configuration.RootPath = "./dist";
+                // configuration.RootPath = "../../../front-end/ClientApp/dist";
             });
 
             // configure strongly typed settings objects
@@ -84,7 +86,21 @@ namespace Dashboard.Api
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStickerService, StickerService>();
             services.AddScoped<IUserService, UserService>();
+        }
 
+        private static void MigrateDatabaseProd()
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+            var builder = new DbContextOptionsBuilder<DashboardDbContext>();
+            var connectionString = configuration.GetConnectionString("Postgres");
+            builder.UseNpgsql(connectionString);
+            using (var context = new DashboardDbContext(builder.Options))
+            {
+                context.Database.Migrate();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,6 +116,8 @@ namespace Dashboard.Api
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+
+                MigrateDatabaseProd();
             }
 
             app.UseHttpsRedirection();

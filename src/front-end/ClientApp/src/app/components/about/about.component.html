@@ -1,7 +1,19 @@
-<p>Being organized brings the value of productiveness to life. To stay organized some planning should be done
-    beforehand. As for me I like an idea of putting stickers on dashboard. You can write whatever you want and just
-    delete it when it is completed.</p>
-<p>But you can’t take sticker notes with you easily, you must take pictures. So, I tried to make a small website for
-    creating stickers on board with syncing, so you can easily see your dashboard wherever you are. </p>
-<p>If you have any issues or tips you can create a ticket at GitHub page <a
-        href="https://github.com/drweb86/dashboard">https://github.com/drweb86/dashboard</a>.</p>
+<div class="standard-page">
+    <h1>Aims</h1>
+    <p>Being organized brings the value of productiveness to life. To stay organized some planning should be done
+        beforehand. As for me I like an idea of putting stickers on dashboard. You can write whatever you want and just
+        delete it when it is completed.</p>
+    <p>But you can’t take sticker notes with you easily, you must take pictures. So, I tried to make a small website for
+        creating stickers on board with syncing, so you can easily see your dashboard wherever you are. </p>
+    <h1>Contacts</h1>
+    <p>If you have any issues or tips you can create a ticket at GitHub page <a
+            href="https://github.com/drweb86/dashboard">https://github.com/drweb86/dashboard</a>.</p>
+    <h1>Art-Works</h1>
+    <p>The project would not be possible without using next art-works as background images:</p>
+    <ul>
+        <li *ngFor="let artWork of backgroundPictures">
+            <a href="{{artWork.taken_from}}"><i>{{artWork.file}}</i></a> by <a
+                href="{{artWork.author_web_site ? artWork.author_web_site : artWork.author_profile}}">{{artWork.author}}</a>.
+        </li>
+    </ul>
+</div>

@@ -4,6 +4,8 @@ import { StickerResultModel } from '../../models/stickers/sticker-result-model';
 import { StickerAddInputModel } from 'src/app/models/stickers/sticker-add-input-model';
 import { StickerUpdateInputModel } from '../../models/stickers/sticker-update-input-model';
 import { ToolbarServie } from 'src/app/services/toolbar.service';
+import { BackgroundPicturesService } from '../../services/background-pictures.service';
+import { BackgroundPicture } from '../../models/view/background-picture';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,12 +14,14 @@ import { ToolbarServie } from 'src/app/services/toolbar.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   isLoading = false;
+  backgroundUrl: string;
   stickers: StickerResultModel[] = [];
   selectedStickerId?: number;
   @ViewChild('dashboard', { static: false }) dashboard: ElementRef<HTMLDivElement>;
 
   constructor(private _stickerService: StickerService,
-    private _toolbarServie: ToolbarServie) { }
+    private _toolbarServie: ToolbarServie,
+    private _backgroundPicturesService: BackgroundPicturesService) { }
 
   ngOnDestroy(): void {
     this._toolbarServie.componentButtons = [];
@@ -37,8 +41,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }];
 
     try {
-      this.stickers = await this._stickerService.getAll().toPromise();
+      let backgroundPictures: BackgroundPicture[];
+      [this.stickers, backgroundPictures] = await Promise.all([
+        this._stickerService.getAll().toPromise(),
+        this._backgroundPicturesService.getBackgrounds()
+      ]);
+
       this.selectedStickerId = this.stickers.length > 0 ? this.stickers[0].id : undefined;
+      this.backgroundUrl = encodeURI(`/assets/backgrounds/${backgroundPictures[Math.floor(Math.random() * (backgroundPictures.length + 1))].file}`);
     } catch (error) {
       alert(error.error.message);
     } finally {

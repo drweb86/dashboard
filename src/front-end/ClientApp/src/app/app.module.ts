@@ -19,6 +19,7 @@ import { StickerService } from './services/sticker.service';
 import { StickerComponent } from './components/sticker/sticker.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { ToolbarServie } from './services/toolbar.service';
+import { BackgroundPicturesService } from './services/background-pictures.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ToolbarServie } from './services/toolbar.service';
       useClass: AuthInterceptor,
       multi: true
     },
+    BackgroundPicturesService,
     ToolbarServie,
     AuthService,
     StickerService,

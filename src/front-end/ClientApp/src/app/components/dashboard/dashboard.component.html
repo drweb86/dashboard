@@ -4,7 +4,7 @@
 </div>
 
 <div *ngIf="!isLoading" fxLayout="column" fxLayoutGap="10px">
-    <div class="dashboard" #dashboard>
+    <div class="dashboard" #dashboard [style.background-image]="'url(' + backgroundUrl + ')'">
         <app-sticker *ngFor="let sticker of stickers; trackBy: stickerTrackBy" [item]="sticker" (edit)="onEdit()"
             (changeColor)="onChangeColor()" (delete)="onDelete()" [class.selected]="selectedStickerId === sticker.id"
             [style.top]="sticker.y + 'px'" [style.left]="sticker.x + 'px'"
