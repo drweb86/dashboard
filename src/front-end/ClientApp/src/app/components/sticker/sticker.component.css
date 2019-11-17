@@ -1,22 +1,27 @@
 .sticker {
   text-align: center;
-  border: 1px solid #d3d3d3;
   min-width: 220px;
-  border: 3px solid;
+  border: 3px dotted transparent;
+  border-radius: 3px;
+}
+
+.selected {
+  border: 3px dashed #1c6ea4;
   border-radius: 3px;
 }
 
 .toolbox {
-  background: #c2185b;
-  padding-bottom: 2px;
-  padding-right: 2px;
+  background: #edf4fa;
+  color: #536975;
   margin-top: -4px;
-  margin-left: 50px;
+  margin-left: 60px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: solid 1px #f7f7f7;
+  border-radius: 2px;
 }
 
-.selected {
-  border: 3px solid #7c7c7c;
-  border-radius: 3px;
+button:hover {
+  background: #cfd8e0;
 }
 
 .sticker-note {

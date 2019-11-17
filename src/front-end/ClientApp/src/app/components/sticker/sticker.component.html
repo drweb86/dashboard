@@ -1,23 +1,22 @@
 <ng-container *ngIf="item !== undefined">
-    <div class="sticker noselect" [style.background]="item.htmlColor"
-        [style.borderColor]="isSelected ? undefined: item.htmlColor" [class.selected]="isSelected">
+    <div class="sticker noselect" [style.background]="item.htmlColor" [class.selected]="isSelected">
         <p class="sticker-note">{{item.text}}</p>
     </div>
 
     <div class="toolbox" fxLayout="row" fxLayoutAlign="end center" *ngIf="isSelected">
-        <button mat-icon-button color="accent" (click)="onHelp()">
+        <button mat-icon-button (click)="onHelp()">
             <mat-icon matTooltip="Click on Note and drag it with mouse to move it.">info</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="onEdit()">
+        <button mat-icon-button (click)="onEdit()">
             <mat-icon matTooltip="Edit (Shortcuts: E, e, Enter)">create</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="onChangeColor()">
+        <button mat-icon-button (click)="onChangeColor()">
             <mat-icon matTooltip="Change Background to Random Color (Shortcuts: c, C)">color_lens</mat-icon>
         </button>
 
-        <button mat-icon-button color="warn" (click)="onDelete()">
+        <button mat-icon-button (click)="onDelete()">
             <mat-icon matTooltip="Delete (Shortcuts: d, D, Delete)">delete</mat-icon>
         </button>
     </div>
