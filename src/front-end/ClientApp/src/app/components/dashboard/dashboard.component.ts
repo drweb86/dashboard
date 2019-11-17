@@ -48,7 +48,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       ]);
 
       this.selectedStickerId = this.stickers.length > 0 ? this.stickers[0].id : undefined;
-      this.backgroundUrl = encodeURI(`/assets/backgrounds/${backgroundPictures[Math.floor(Math.random() * (backgroundPictures.length + 1))].file}`);
+      const randomImageIndex = Math.floor(Math.random() * (backgroundPictures.length - 1));
+      this.backgroundUrl = encodeURI(`/assets/backgrounds/${backgroundPictures[randomImageIndex].file}`);
     } catch (error) {
       alert(error.error.message);
     } finally {
@@ -136,10 +137,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private getDistinctColor(): string {
     const goodColors = [
-      '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080',
+      '#ebf2f9', '#db6e89', '#87bb8d', '#e6d77a',
+      '#a6b9ff', '#f7a063', '#e7a6fb', '#c6ffff',
+      '#d4ec8b', '#fabebe', '#b5e3e3', '#dcacfb',
+      '#ffdfbb', '#fffac8', '#ffaefb', '#cecece',
+      '#ffb6b6', '#a5f4bd', '#ffffb4', '#ffd8b1', '#cbcbff',
     ];
 
-    const randomNum = Math.floor(Math.random() * (goodColors.length + 1));
+    const randomNum = Math.floor(Math.random() * (goodColors.length - 1));
     return goodColors[randomNum];
   }
 
